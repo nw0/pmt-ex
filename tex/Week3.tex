@@ -1,0 +1,129 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{fullpage}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\makeatletter
+\def\footnoterule{\kern-3\p@
+  \hrule \@width 2in \kern 2.6\p@} % the \hrule is .4pt high
+\makeatother
+
+\begin{document}
+
+\title{PMT Additional Exercises (Week 3)}
+\author{Nicholas Sim}
+\date{October 19th, 2017}
+\maketitle{}
+
+
+\section{Discrete Structures: Relations}
+% sup/inf
+% infinite union/intersection again (?)
+% archimedean axiom (ex: between any two reals lies a rational)
+% Partitions
+% Relations (this week)
+
+\begin{enumerate}
+    \item (*) For the relation \(x \sim y \Leftrightarrow | x - y | < 1 \), state whether it is reflexive, symmetric, or transitive, given:
+    \begin{enumerate}
+        \item \(x, y \in \mathbb{R} \)
+        \item \(x, y \in \mathbb{Z} \)
+    \end{enumerate}
+
+    \item Consider a finite set \( S \), where \( |S| = n\).
+    \begin{enumerate}
+        \item How many relations are there on \( S \)? (on your tutorial sheet)
+        \item How many of them are reflexive? (also on your tutorial sheet)
+        \item Symmetric?
+        \item Reflexive and symmetric?
+        \item Transitive? (don't spend more than 5 minutes on this)
+    \end{enumerate}
+
+    \item Consider any integer \( n \). Show that if \( n^2 \) is divisible by 3, then so is \( n \). \\
+    (Hint: Consider the equivalence classes \( \mathbb{Z} / R_3 \).)
+
+    \item (**) Hence, prove that \( \sqrt{3} \) is irrational.
+\end{enumerate}
+
+
+\section{Logic: Translation Exercises}
+
+% nothing carried forward
+
+Translate the statements from English to Logic, defining atoms where needed. \emph{[format thanks to Jeremy Kong]}
+
+\begin{enumerate}
+    \item If you write no answers, (then) you will get zero marks.
+    \item Tony will deduct 10,000 marks if I don't write a base case.
+    \item (*) I will only get stuck in Huxley building when I stay after midnight.
+    \item (Consider: I will only get stuck in Huxley building if I stay after 10 p.m.)
+    \item Unless I submit the coursework on time, I can \emph{only} get a pass mark.
+    \item My cactus won't grow unless I give it enough water.
+    \item Three burgers are sufficient to make me full.
+    \item You need a kettle to make tea.
+    \item All men are mortal, and Socrates is a man. Therefore Socrates is mortal.
+    \item (**) I know that the cat in the box is alive or dead.
+    \item The parade will go on, even if it rains.
+\end{enumerate}
+
+\footnoterule
+\emph{(*) Starred questions are harder, but good for you}
+
+
+\newpage
+
+\section{Solutions to Relations Exercises}
+\begin{enumerate}
+    \item
+    \begin{enumerate}
+        \item Reflexive and symmetric, but not transitive, since \( 1 \sim 1.5 \sim 2 \), but \( 1 \nsim 2 \)
+        \item Equivalence relation. This is \( = \) on \( \mathbb{Z} \)
+    \end{enumerate}
+
+    \item Number of relations on a finite set. It may help to visualise a \( n \times n \) matrix.
+    \begin{enumerate}
+        \item Recall that a relation is a subset of \( S \times S \). So \( 2 ^ {n^2} \).
+        \item All elements must be related to themselves. So we fix \( n \) elements out of \( S \times S \) (since we \emph{must} choose them, and get \( 2 ^ {n^2 - n}\).
+        \item ``About half'', since \( x_i \sim x_j \Rightarrow x_j \sim x_i \). We must take consider all the cases where \( i = j \) separately. Thus: \( 2 ^ {(n^2 - n) / 2 + n}\).
+        \item This is just the same as the previous part, except we \emph{must} choose elements \( (x, x) \). \(2 ^ {(n^2 - n) / 2}\)
+        \item Trick question! There isn't a closed-form formula for this, but you can calculate it recursively. https://oeis.org/A006905
+    \end{enumerate}
+
+    \item Consider the elements defined by quotient set \( \mathbb{Z} / R_3 \).\footnote{Some other mathematicians write \( \mathbb{Z} / 3 \mathbb{Z} \), but Steffen's way is easier to type}
+    There are 3 elements: \( [0], [1], [2] \). Note: \( [a] \) represents the set of integers \( x \) such that \( x \equiv a \mod 3 \). \\
+    We will show the contrapositive.
+    Recall that \( n \) divisible by 3 if and only if \( n \in [0] \). Suppose \( n \) is not divisible by 3, then \( n \in [1] \cup [2] \). In both cases, \( n^2 \in [1] \). (show why this is so!).Then \( n^2 \) is not divisible by 3.
+
+    \item This sort of problem probably isn't going to appear in your exam, but the skills you need to understand it will certainly help! \\
+    Suppose \( \sqrt{3} = \frac{p}{q} \), where \(p \in \mathbb{Z}, q \in \mathbb{N} \setminus \{0\} \) as in Example 2.16 (2). Recall that we can represent rational numbers in ``lowest terms'', so \(p, q\) have no common factors. By squaring, \( 3 q^2 = p^2 \), so we have \( p^2 \) is divisible by 3. Hence \(p\) is divisible by 3. \\
+    Now let \( p = 3p' \), and \( q^2 = 3p'^2 \). Now \(q\) is divisible by 3. But \(p,q\) have no common factors, so this is a contradiction.
+\end{enumerate}
+
+
+\section{Solutions to Translation Exercises}
+There may be equally correct alternative translations.
+
+\begin{enumerate}
+    \item \( \textrm{`write no answers'} \rightarrow \textrm{`zero marks'} \) (if P then Q)
+    \item \( \textrm{`no base case'} \rightarrow \textrm{`lose 10,000 marks'} \) (Q if P)
+    \item \( \textrm{`stuck in Huxley'} \rightarrow \textrm{`stayed after midnight'} \) (P only if (when) Q) \\
+    Note: In this scenario, you would get stuck in Huxley precisely when you stayed after midnight. However, the example is only strong enough for a one-way implication! Hence the next exercise.
+    \item \( \textrm{`stuck in Huxley'} \rightarrow \textrm{`stayed after 22.00'} \) (P only if Q)
+    \item \( \neg \textrm{`submit on time'} \rightarrow \textrm{`only get pass mark'} \) (Q unless not P) \\
+    In this context it is reasonable to use `submit late'. However, I would be more careful about changing the antecedent to `get more than a passing mark'.
+    \item \( \textrm{`cactus grows'} \rightarrow \textrm{`enough water'} \) (not P unless Q, becoming: not Q implies not P, ``the contrapositive'')
+    \item \( \textrm{`eat three burgers'} \rightarrow \textrm{`full'} \) (P is sufficient for Q) \\
+    Maybe two burgers are sufficient! Who knows?
+    \item \( \textrm{`make tea'} \rightarrow \textrm{`have kettle'} \) (Q is necessary for P)
+    \item \( \textrm{`all men are mortal'} \land \textrm{`Socrates is a man'} \rightarrow \textrm{`Socrates is mortal'} \) \\
+    Rather dissatisfyingly, we can't do better with propositional logic. Later, with predicate logic, we'll learn to `split the atom'.
+    \item \( \textrm{`I know that the cat in the box is alive or dead'}\) \\
+    We can't reduce this! Consider: \( \textrm{`I know the cat is alive'} \lor \textrm{`I know the cat is dead'}\).
+    If I am Schr{\"o}dinger, the two terms might be false (I don't know which is true), but I do know that cats must be either alive or dead.
+    \item \( \textrm{`the parade will go on'}\) \\
+    Here, it doesn't matter whether it rains or not.
+\end{enumerate}
+
+\end{document}
