@@ -1,0 +1,143 @@
+\documentclass[10pt,a4paper]{article}
+    
+\usepackage{fullpage}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{PMT Additional Exercises (Week 4)}
+\author{Nicholas Sim}
+\date{October 26th, 2017}
+\maketitle{}
+
+
+\section{Discrete Structures: Equivalence Classes}
+% Relations (repeat)
+% Equivalence classes
+
+In the lectures you have constructed the rational numbers 
+\( \mathbb{Q} \) from the sets \( \mathbb{Z}, \mathbb{N} \).
+Here we construct \( \mathbb{Z} \), since we only understand 
+\( \mathbb{N} \). (This is glossed over in def. 3.4.)
+
+Let \( S = \mathbb{N} \times \mathbb{N} \). 
+Define a relation \( \sim \) on \( S \) by \( (m_1, n_1) \sim (m_2, n_2) \) 
+(or \( \left( (m_1, n_1), (m_2, n_2) \right) \in \sim \))
+iff \( m_1 + n_2 = m_2 + n_1 \).
+Informally, we can think of \( (m, n) \) as \( m - n \).
+
+\emph{[construction thanks to A. Corti]}
+
+\begin{enumerate}
+    \item Show that \( \sim \) is an equivalence relation.
+    \item Show that \( (m_1, n_1) \sim (m_2, n_2) \) iff 
+    \( (m_1 + k, n_1 + k) \sim (m_2 + k, n_2 + k) \) 
+    for any \( k \in \mathbb{N} \).
+    \item Show that if \( (m_1, k) \sim (m_2, k) \) then 
+    \( m_1 = m_2 \) 
+    for any \( k \in \mathbb{N} \).
+    \item Similarly, show that if \( (k, n_1) \sim (k, n_2) \) then 
+    \( n_1 = n_2 \) 
+    for any \( k \in \mathbb{N} \).
+
+    Now let \( Z = S / \sim \), and define \( + \) on \( Z \) by 
+    \( [(m_1, n_1)] + [(m_2, n_2)] = [(m_1 + m_2, n_1 + n_2)] \).
+    
+    For convenience, represent members of \( Z \) by 
+    \( \bar{z} = [(z, 0)] \) and \( -\bar{z} = [(0, z)] \)
+    for any \( z \in \mathbb{N} \).
+
+    \item Show that \( \bar{z} + (-\bar{z}) = [(0, 0)] \).
+    \item Fix any \( \bar{z} \in Z \). 
+    Show that either \( z \in \mathbb{N} \) or (abusing notation) 
+    \( -z \in \mathbb{N} \).
+    \item (*) Write down an invertible function 
+    \( f : \mathbb{Z} \rightarrow Z \).
+    Show that \( \forall a, b \in \mathbb{Z}, f (a + b) = f(a) + f(b) \).
+\end{enumerate}
+
+
+\section{Logic: Adequacy}
+% Lectures: Equivalences
+% This is quite well-covered by the tutorial sheets
+% We focus on adequacy and some proofs, e.g. EM, contrapositive
+
+
+[Informal definition]
+Say a set of connectives is \emph{adequate} if any propositional formula 
+of \(n\) variables can be written as some other formula only using variables 
+\(p_1, ... , p_n\) and the connectives.
+
+For instance, \( \{ \neg , \lor \}, \{ \neg, \rightarrow \} \) 
+are both adequate.
+We've also seen that \( \{ \uparrow \} \) (NAND) is adequate.
+
+\begin{enumerate}
+    \item We introduce a new connective, NOR (\( \downarrow \)).
+    Show that this connective is adequate.
+    \item (*) Show that apart from NOR and NAND, 
+    there are no other single adequate (binary) connectives.
+    \emph{[thanks to D. Evans]}
+\end{enumerate}
+
+
+\newpage
+
+\section{Solutions to Equivalence Classes}
+
+\begin{enumerate}
+    \item
+    Reflexivity. Clearly \( m_1 + n_1 = m_1 + n_1 \). \\
+    Symmetry. Suppose \( m_1 + n_2 = m_2 + n_1 \).
+    Then clearly \( m_2 + n_1 = m_1 + n_2 \). \\
+    Transitivity. Suppose \( m_1 + n_2 = m_2 + n_1 \) and 
+    \( m_2 + n_3 = m_3 + n_2 \). Then
+    \( m_1 + n_3 = (m_2 + n_1 - n_2) + (m_3 + n_2 - m_2) = n_1 + m_3 \).
+    \item We have \( m_1 + n_2 = m_2 + n_1 \).
+    For \( \Rightarrow \), verify by adding \(k\) to all four terms.
+    For \( \Leftarrow \), fix \( k = 0 \).
+    \item Suppose \( m_1 + k = m_2 + k \). Subtract \(k\) from both sides 
+    (valid as each side \( \ge k \)).
+    \item Similar to previous part.
+    \item This is just \( [(z, 0)] + [(0, z)] = [(z + 0, 0 + z)] = [(z, z)]\) 
+    as defined by \( + \) on \( Z \). Trivially we have 
+    \( (k, k) \sim (0, 0) \forall k \in \mathbb{N} \) since \( k + 0 = 0 + k\).
+    So clearly \( [(z, z)] = [(0, 0)]) \) since they belong to the same 
+    equivalence class.
+    \item Write \( \bar{z} = [(m, n)] \). Either \( m \ge n \), then 
+    \( \bar z = [(m, n)] = [(m - n, 0)] \), or \( m \le n \), where 
+    \( \bar z = [(m, n)] = [(0, n - m)] \). Note that in the case \( m = n \), 
+    both are valid and of course \( \bar z \sim (0, 0) \).
+    \item Define \(f(x) = [(x, 0)] \) when \(x \ge 0 \) and 
+    \(f(x) = [(0, -x)] \) otherwise. Simply enumerate 4 possibilities:
+    \begin{enumerate}
+        \item \( a, b \ge 0 \).
+        \( f (a + b) = [(a + b, 0)] = [(a, 0)] + [(b, 0)] = f(a) + f(b) \).
+        \item \( a < 0 \le b \).
+        \( f (a + b) = f ( b - (-a) ) = [(b, -a)] = [(b, 0)] + [(0, -a)] = f(a) + f(b) \).
+        \item \( b < 0 \le a \). Reverse \(a, b\) above.
+        \item \( a, b < 0 \).
+        \( f (a + b) = f ( 0 - ( - (a + b))) = [(0, -(a + b)] = [(0, -a)] + [(0, -b)] = f(a) = f(b) \).
+    \end{enumerate}
+    Slightly tedious.
+\end{enumerate}
+
+\section{Solutions to Adequacy}
+
+\begin{enumerate}
+    \item We need only use NOR to replicate a set of adequate connectives.
+    Write down: \( \neg p \equiv p \downarrow p \) and 
+    \( p \land q \equiv ( p \downarrow p ) \downarrow ( q \downarrow q) \).
+    \item Note: there are \(2^4\) possible binary connectives.
+    Suppose that a binary connective \( \cdot \) is adequate. We know that 
+    \( \top \cdot \top \equiv \bot \) and \( \bot \cdot \bot \equiv \top \), 
+    otherwise we would be unable to express negation.
+    Only 4 possibilities remain, of which two are NOR and NAND.
+    In the remaining two cases, \( p \cdot q \) would be logically equivalent 
+    to either \( \neg p \) or \( \neg q \) (draw out the truth table!), 
+    which isn't adequate by itself.
+\end{enumerate}
+
+\end{document}
