@@ -1,0 +1,182 @@
+\documentclass[10pt,a4paper]{article}
+    
+\usepackage{fullpage}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{PMT Additional Exercises (Week 5)}
+\author{Nicholas Sim}
+\date{November 2nd, 2017}
+\maketitle{}
+
+
+\section{Discrete Structures: Functions}
+% Peano Arithmetic and Functions
+% I want to set a simple induction question, but can't think of one.
+% Therefore we're going to mix equivalence classes and functions.
+
+We have seen in the lectures that if \( R \) is an equivalence relation on 
+a set \( A \), it will partition \( A \) into its quotient set \( A / R \).
+Prop. 2.17 shows that \( A / R = \left\{ [a] : a \in A \right\} \).
+
+Suppose that every equivalence class \( [a] \) has a 
+(unique, distinguished) representative \( \bar{a} \).
+
+\begin{enumerate}
+    \item Let \(A, B\) be finite sets, and define 
+    \(f : A \rightarrow B \) to be 
+    surjective.\footnote{\emph{surjective} here means every element in 
+    \(B\) is mapped by at least 1 element in \(A\).}
+    Show that there is an equivalence relation \(R\) on \(A\), 
+    where \( (a_1, a_2) \in R \) if and only if \( f(a_1) = f(a_2) \).
+
+    \item Let \( g : B \rightarrow A \) be a function where 
+    \( g(b) = \bar a \), the unique representative of \([a]\) 
+    where \(f(a) = b\). Show that \(g\) is 
+    injective.\footnote{\emph{injective} maps preserve distinctness: 
+    if \( g(b_1) = g(b_2) \), then we can conclude \( b_1 = b_2 \). 
+    Say: ``No two \(b\)s map to the same \(a\)."}
+
+    \item Define \( g' : B \rightarrow A/R \) similarly to \(g\), 
+    except mapping to the equivalence class \([a]\) instead of \( \bar a \). 
+    Show that \(g'\) is a bijection. \\
+
+    The following questions test your understanding of the definitions.
+    \item (*) Suppose \( A \ne \varnothing \), and \( f : A \rightarrow B \). 
+    Show that there is a function \( g : B \rightarrow A \) such that 
+    \( (g \circ f) (a) = a \) for any \(a \in A\).
+    \emph{[thanks to A. Corti]}
+
+    \item Let \(A, B\) be finite sets of \(m, n\) elements respectively.
+    \begin{enumerate}
+        \item (*) How many injections \( A \rightarrow B\) are there?
+        \item Let \( n = 2 \) How many surjections?
+        \item (**) Now \( n > 2 \). How many surjections?
+        \item How many bijections?
+    \end{enumerate}
+    \emph{[Hint: consider cases \(m\) larger than \(n\), etc.]}
+\end{enumerate}
+
+
+\section{Logic: Natural Deduction}
+% Natural Deduction
+
+Prove the following using Natural Deduction:
+
+\begin{enumerate}
+    \item \( A \rightarrow B , A \rightarrow \neg B \vdash \neg A \)
+    \item \( \neg B \rightarrow \neg A \vdash A \rightarrow B \) (the contrapositive)
+    \item \( \vdash A \rightarrow A \)
+    \item \( \vdash A \lor \neg A \) (obviously, you're not allowed to use EM for this one)
+    \item \( \left( A \rightarrow (B \rightarrow C ) \right) \vdash 
+    \left( (A \rightarrow B) \rightarrow (A \rightarrow C) \right) \)
+    \item \emph{[Q1a of the 2015 exam]} \( B, \neg C \rightarrow \neg A \lor \neg B \vdash A \rightarrow C \)
+    \item \( A \rightarrow ( B \rightarrow C ) \vdash B \rightarrow ( A \rightarrow C) \)
+\end{enumerate}
+
+\newpage
+
+\section{Solutions to Functions}
+
+\begin{enumerate}
+    \item This is a routine verification of R, S, T, which I will omit.
+    \item Since \(f\) is surjective, \(g\) is injective. \\
+    (another proof) We defined \(R\) such that \( f(a_1) = f(a_2) = b \) 
+    if and only if \(a_1, a_2\) belong to the same equivalence class. 
+    So \(f\) maps all the members of \( [a] \) to the same value of \(b\).
+    Now suppose \( g(b_1) = g(b_2) = \bar a \in A \). 
+    Then \( b_1 = f(\bar a) = b_2 \).
+    \item It suffices to show that \(g'\) is surjective 
+    (argue injective via surjectivity of \(f\), 
+    alternatively, proof similar to injectivity of \(g\)). 
+    Suppose for a contradiction that \(g'\) is not surjective. 
+    Then \( \exists a \in A \) such that \( f(a) \notin B \). 
+    But \(f\) is a function (hence maps all the elements in its domain).
+
+    \item We need \( A \ne \varnothing \), because to be a function, 
+    \(g\) must map any value in \(B\) to some value.
+    Define \(g\) as follows.  
+    Fix \( b \in B \). If \( b \notin \mathrm{image} (f) \), 
+    then let \( g(b) = a_0 \) (choose any \(a_0 \in A\)). 
+    If \(b\) is in the image of \(f\), then 
+    \( \exists a_b \in A \) s.t. \( f (a_b) = b \). 
+    Let \( g(b) = a_b \).
+    
+    (proof) Pick \(a \in A\) arbitrarily and verify \( (g \circ f)(a) = a \).
+    Let \( f(a) = b \) and clearly \(a = a_b\) by construction. 
+    Then \( g ( f(a_b) ) = g(b) = a_b = a \) as required.
+
+    \item \( |A| = m, |B| = n \).
+    \begin{enumerate}
+        \item Suppose \( m > n \). There can be no injections.
+        For \( m \le n \), we need to choose \(m\) distinct elements to 
+        map to, from \(n\) possible values, where order (permutation) matters. 
+        So \( \frac{n!}{(m-n)!} \).
+
+        \item Try inclusion-exclusion. There are \( n ^m \) possible 
+        functions \( A \rightarrow B \) (\(n\) choices for \(m\) inputs). 
+        But \( n = 2 \), so just \( 2 ^ m \). There are only two possible 
+        non-surjective functions (send all elements in \(A\) to the first 
+        value, or the second value). So \( 2 ^ m - 2 \).
+
+        \item (Why can't we just count? Think about this) \\
+        Consider \( n = 3 \). Write \(1, 2, 3\) for the elements of \(B\).
+        We need to subtract the non-surjective functions from \( 3 ^ m \). 
+        There are \( 2 ^ m \) functions each including only (1, 2), (1, 3), 
+        or (2, 3). But the Principle of Inclusion-Exclusion tells us that 
+        we have subtracted 3 functions twice. So \( 3^m - 3 (2^m) + 3 \).
+
+        Construction: we want \( n^m - (n)(n-1)^m + {n \choose 2} (n-2)^m - \ldots \)
+
+        Claim: This formula works\\
+        \[ \sum_{k=0}^{n} (-1)^k {n \choose k} (n-k)^m \]
+        Satisfy yourself that this is correct.
+
+        \item This is just the number of injections when \( m = n \), i.e. \(m!\).
+    \end{enumerate}
+\end{enumerate}
+
+
+\section{Solutions to Natural Deduction}
+
+Full proofs are not included, but you can ask me for clarifications.
+
+\begin{enumerate}
+    \item Suppose \(A\). Then from the givens, we can use 
+    \( \rightarrow E \) to get both \(B, \neg B\). Contradiction. 
+    So we get \( \neg A \) by \( \neg I\).
+
+    \item Suppose \(A\). We want to get \(B\), so suppose \( \neg B\). 
+    Get \( \neg A \) by \( \rightarrow E \), then \(B\) by \(PC\). 
+    Conclude \(A \rightarrow B\) using \( \rightarrow I \).
+
+    \item This one can't be that hard! Do it yourself.
+
+    \item Note: if we could use equivalences, 
+    this is exactly the same as the last. 
+    This appears in the notes, and the overall form is a proof 
+    by contradiction.
+
+    \item This is slightly messy, but we'll just try: \\
+    Suppose \( A \rightarrow B \). We want to get \( A \rightarrow C \). 
+    So suppose \(A\). \(B\) follows using \( \rightarrow E \). 
+    \( B \rightarrow C \) from using \( \rightarrow E \) on the given. 
+    Then we get \(C\), thus \( A \rightarrow C \).
+    Finally we have \( \left( (A \rightarrow B) \rightarrow (A \rightarrow C) \right) \).
+
+    \item Suppose \(A\). We want to get \(C\). 
+    Suppose \( \neg C \). Then we get \( \neg A \lor \neg B \). 
+    Perform \( \lor E \) to get \( \neg B \): 
+    but this contradicts the given \(B\). 
+    So after some \( \bot I \), we get \(C\) via \(PC\).
+    And that's all we need to conclude \( A \rightarrow C \).
+
+    \item Suppose \(B\). We will show \( A \rightarrow C\).
+    Suppose \(A\). Then we have \( B \rightarrow C \), but we have 
+    \(B\), so we have \(C\).
+\end{enumerate}
+
+\end{document}
