@@ -1,0 +1,102 @@
+\documentclass[10pt,a4paper]{article}
+    
+\usepackage{fullpage}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{PMT Additional Exercises (Week 7)}
+\author{Nicholas Sim}
+\date{November 16th, 2017}
+\maketitle{}
+% We skipped Week 6 to do some ND and exam questions.
+
+% Remember to do some proofs with them.
+% Predict that the DS assignment will be poorly attempted. 
+% These proofs should be sufficient.
+
+
+\section{Logic: First-order translations}
+% I'm a little concerned about timing here. Delay this by a week?
+Defining appropriate constants, translate the following. You may use the following relations:
+
+\begin{itemize}
+    \item person(\(x\)) means \(x\) is a person
+    %\item happy(\(x\)) means \(x\) is happy
+    \item hungry(\(x\)) means \(x\) is hungry
+    \item loves(\(x, y\)) means \(x\) loves \(y\)
+\end{itemize}
+
+We define an ordering.
+\begin{enumerate}
+    \item All love is unreciprocated. \emph{(anti-symmetry)}
+    \item If a person's beloved loves another, then so does the original person. \emph{(transitivity)}
+    \item Nobody loves themselves. \emph{(anti-reflexivity)}
+    \item Between any two people, one must love the other. \emph{(totality)}
+    \item Everybody loves somebody. \emph{(minimum element)} \\
+
+    Some mathematical translations (you may assume the ordering above holds)
+    \item There is a hungry person who is loved by all other hungry people.
+
+    \item There are (at least) three hungry people.
+
+    \item There are at most two hungry people.
+
+    \item There are infinitely many hungry people.
+\end{enumerate}
+
+You might notice that unary relations can define sets (like the set of hungry people).
+
+% Construct groups with relations instead of functions.
+
+It's hard to discuss mathematics without functions.
+Once we have these we can construct algebraic structures, such as groups, with predicate logic.
+
+% Construct groups next time
+
+\newpage
+
+\newcommand{\loves}[1]{\textrm{loves}(#1)}
+\newcommand{\person}[1]{\textrm{person}(#1)}
+\newcommand{\hungry}[1]{\textrm{hungry}(#1)}
+
+\section{Solutions to translations}
+\begin{enumerate}
+    \item \( (\forall x) (\forall y) \left( \loves{x, y} \rightarrow \neg \loves{y, x} \right) \).
+    \item Note that I only require the original lover to be a person. \\
+    \( (\forall x) (\forall y) (\forall z) \left( 
+        \person{x} \land \loves{x, y} \land \loves{y, z} \rightarrow \loves{x, z} \right) \)
+    \item \( (\forall x) \left( \person{x} \rightarrow \neg \loves{x, x} \right) \)
+    \item \( (\forall x) (\forall y) \left(
+        \person{x} \land \person{y} \rightarrow \loves{x, y} \lor \loves{y, x} \right) \)
+    \item \( (\exists x) (\forall y) \loves{y, x} \) \\
+
+    Important: for brevity below, I have declined to state that \(x, y, z\) may be people.
+    \item Realise that \emph{hungriness} defines a subset of \emph{people}.
+    In fact, so does any unary relation.\\
+    \( (\exists x) \left( \hungry{x} \land (\forall y) \left( 
+        y \ne x \land \hungry{y} \rightarrow \loves{y, x} \right) \right) \)
+    Note: \(y \ne x\) is very important here.
+
+    \item \( (\exists x) (\exists y) (\exists z) \left( x \ne y \land y \ne z \land 
+        x \ne z \land \hungry{x} \land \hungry{y} \land \hungry{z} \right) \)
+
+    \item Negate the last statement.
+
+    \item Essentially, we are saying there is no finite number of hungry people.
+    However, it would quickly get boring writing a formula similar to the previous parts. \\
+    \( \neg (\exists x) \left( \hungry{x} \land 
+        (\forall y) \left( \hungry{y} \rightarrow \loves{x, y} \right) \right) \) (why?)
+
+    Or use induction.
+    \( (\forall x) \left( \hungry{x} \rightarrow (\exists y) \left(
+        \hungry{y} \land \loves{y, x} \right) \right) \land 
+        (\exists z) \hungry{z} \)
+
+    Satisfy yourself that these are equivalent.
+\end{enumerate}
+
+
+\end{document}
