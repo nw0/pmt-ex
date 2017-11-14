@@ -19,7 +19,7 @@
 
 
 \section{Logic: First-order translations}
-% I'm a little concerned about timing here. Delay this by a week?
+\subsection{Easy translations}
 Defining appropriate constants, translate the following. You may use the following relations:
 
 \begin{itemize}
@@ -52,9 +52,43 @@ You might notice that unary relations can define sets (like the set of hungry pe
 % Construct groups with relations instead of functions.
 
 It's hard to discuss mathematics without functions.
-Once we have these we can construct algebraic structures, such as groups, with predicate logic.
+Once we have these we can construct algebraic structures, such as groups, 
+with predicate logic.\footnote{Or we can (painfully!) use relations to stand in for functions, as you'll see next term.}
 
 % Construct groups next time
+\subsection{Graphs (also easy)}
+Suppose L is a language with equality and a 2-ary relation symbol \(E\).
+
+Define a first-order L-structure \(G\), 
+calling the elements in its domain \emph{vertices}, 
+using constant symbols (of L) \(v_1, v_2, ...\).
+Write a formula such that \texttt{E} has the following properties in \(G\):
+
+\begin{enumerate}
+    \item \texttt{E} is irreflexive
+    \item \texttt{E} is symmetric
+\end{enumerate}
+
+Call \(G\) an undirected graph. Translate the following:
+
+\begin{enumerate}
+    \item \(G\) is a complete graph
+    \item Any two vertices of \(G\) share exactly 1 common neighbour
+\end{enumerate}
+
+\emph{(Erd\"os-Renyi friendship theorem:)} In a finite graph, 
+if any two vertices share precisely one common neighbour, 
+then the graph is a \emph{friendship graph} (or Dutch windmill graph).
+
+Notice that we normally define the set of edges as a subset of \(V \times V\). 
+Like how a unary relation defines a subset of the domain (\(V\) here), 
+a binary relation defines a subset of \(V \times V\).
+
+Why can't we express the following?
+\begin{enumerate}
+    \item There is a path between \(v_1\) and \(v_2\)
+    \item \(G\) is a connected graph
+\end{enumerate}
 
 \newpage
 
@@ -63,6 +97,7 @@ Once we have these we can construct algebraic structures, such as groups, with p
 \newcommand{\hungry}[1]{\textrm{hungry}(#1)}
 
 \section{Solutions to translations}
+\subsection{Easy translations}
 \begin{enumerate}
     \item \( (\forall x) (\forall y) \left( \loves{x, y} \rightarrow \neg \loves{y, x} \right) \).
     \item Note that I only require the original lover to be a person. \\
@@ -96,6 +131,25 @@ Once we have these we can construct algebraic structures, such as groups, with p
         (\exists z) \hungry{z} \)
 
     Satisfy yourself that these are equivalent.
+\end{enumerate}
+
+
+\subsection{Graph translations}
+\begin{enumerate}
+    \item \( (\forall v_1) (\forall v_2) E(v_1, v_2) \)
+    \item \( (\forall v_1) (\forall v_2) (\exists v_3) (E(v_1, v_3) \land E(v_3, v_2)) \)
+\end{enumerate}
+
+Why not:
+\begin{enumerate}
+    \item Essentially, we are talking about the transitive closure of \(E\).
+    If we defined a new 2-ary relation \texttt{path}, it might look like this:
+    \( path(u, v) : E(u, v) \lor (\exists t) (path(u, t) \land E(t, v)) \). \\
+    Since we can't define add a new relation symbol to L, 
+    you'll quickly see that there's a way to express that there is a path of length \(n\) between two vertices,
+    there isn't (finite length) formula that can express that there is a path between two vertices.
+    \item This follows from the previous section.
+    The definition of a graph being connected is: pick any two vertices, then there is a path between them.
 \end{enumerate}
 
 
