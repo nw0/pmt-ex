@@ -1,0 +1,63 @@
+\documentclass[10pt,a4paper]{article}
+    
+\usepackage{fullpage}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{PMT Additional Exercises (Week 9)}
+\author{Nicholas Sim}
+\date{November 30th, 2017}
+\maketitle{}
+% Last week we talked about equality in first-order languages
+%  and groups as first-order structures.
+
+% This week's programme:
+% - Induction (by request)
+% - Some revision for DS (adapted past exam qns)
+% Consider doing more DS next week, rather than logic.
+
+\section{Induction}
+
+\section{Discrete Structures: Selected questions}
+All questions are verbatim or adapted; sources indicated.
+
+\begin{enumerate}
+    \item \emph{[2008 exam Q3d, 9 mins]}
+    Say that a binary relation \(\sim \subset A \times A \)  is \emph{combinative} if it fulfils:
+    \[ (\forall x, y, z) x \sim z \land y \sim z \Rightarrow y \sim x \]
+    Prove that if \(R\) is reflexive and combinative, then \(R\) is an equivalence relation.
+
+    \item \emph{[2007 exam Q2c, 6 mins]}
+    Given that \(A, B\) are transitive relations, show that \( A \cap B \) is also transitive.
+
+    \item \emph{[2015 Q1e(iii) and 2016 Q1c(iii), 3 mins]}
+    Let \(f: A \rightarrow B, g : B \rightarrow C\) be (total) functions.
+    Prove that if \(g \circ f\) is surjective, then so is \(g\).
+
+    \item \emph{[General, 4 mins]}
+    For each of the following functions, write down whether they are injective or surjective individually.
+    \begin{enumerate}
+        \item \( f : \mathbb{R} \rightarrow \mathbb{R}^+, f(x) = e^x \)
+        \item \( f : [0, 0.5] \rightarrow [0, 1], f(x) = x - x^2 \)
+    \end{enumerate}
+\end{enumerate}
+
+\newpage
+
+\section{Solutions to induction}
+
+\section{Solutions to revision}
+\begin{enumerate}
+    \item To show: \(R\) is an equivalence relation. We will call the combinative property (C).\\
+    (R) Reflexivity: given. \\
+    (S) Symmetry: Suppose \( a R b \). We have \(b R b\) from reflexivity.
+    Substituting \(b\) for \(z\), \(a\) for \(x\) in (C), we have \(b R a\). \\
+    (T) Transitivity: Suppose \( a R b, b R c \). We want to show \( a R c \).
+    We have \(c R b\) by (S) on \(b R c\), and \(a R b\) (given).
+    Substituting \(c, a, b\) for \(x, y, z\) respectively in (C), we get \(a R c\), as required.
+\end{enumerate}
+
+\end{document}
