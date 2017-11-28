@@ -20,6 +20,7 @@
 % Consider doing more DS next week, rather than logic.
 
 \section{Induction}
+Prove (by induction) that every positive integer greater than 1 is a product of primes.
 
 \section{Discrete Structures: Selected questions}
 All questions are verbatim or adapted; sources indicated.
@@ -31,7 +32,7 @@ All questions are verbatim or adapted; sources indicated.
     Prove that if \(R\) is reflexive and combinative, then \(R\) is an equivalence relation.
 
     \item \emph{[2007 exam Q2c, 6 mins]}
-    Given that \(A, B\) are transitive relations, show that \( A \cap B \) is also transitive.
+    Given that \(R, S\) are transitive relations on a domain \(A\), show that \( R \cap S \) is also transitive.
 
     \item \emph{[2015 Q1e(iii) and 2016 Q1c(iii), 3 mins]}
     Let \(f: A \rightarrow B, g : B \rightarrow C\) be (total) functions.
@@ -41,7 +42,22 @@ All questions are verbatim or adapted; sources indicated.
     For each of the following functions, write down whether they are injective or surjective individually.
     \begin{enumerate}
         \item \( f : \mathbb{R} \rightarrow \mathbb{R}^+, f(x) = e^x \)
-        \item \( f : [0, 0.5] \rightarrow [0, 1], f(x) = x - x^2 \)
+        \item \( f : [-1, 0.5) \rightarrow [-2, 0.25], f(x) = x - x^2 \)
+    \end{enumerate}
+
+    \item \emph{[Selected M1F (A. Corti), no more than 1 min each]}
+    True or false:
+    \begin{enumerate}
+        \item Every subset \(S \subset \mathbb{N} \) has a least element (under the ordering \( \le \)).
+        \item Let \(f : A \rightarrow B \) be a function.
+        \( R = \left\{ (a_1, a_2) \in A \times A : f(a_1) = f(a_2) \right\} \) 
+        is an equivalence relation on \(A\).
+        \item Let \( f : A \rightarrow B \) be a function.
+        Suppose that there is a function \( g : B \rightarrow A \) such that 
+        \( (\forall a \in A) g \circ f (a) = a \), and another function \( h : B \rightarrow A \) with 
+        \( (\forall b \in B) f \circ h (b) = b \). Then \(g = h\).
+        \item Let \(X\) be a finite set. The set of all functions \( f : \mathbb{N} \rightarrow X \) is countable.
+        \item Let \(X\) be a finite set. The set of all functions \( f : X \rightarrow \mathbb{N} \) is countable.
     \end{enumerate}
 \end{enumerate}
 
@@ -50,6 +66,8 @@ All questions are verbatim or adapted; sources indicated.
 \section{Solutions to induction}
 
 \section{Solutions to revision}
+Note: there is a distinct possibility that any of the solutions may be incorrect or insufficient.
+
 \begin{enumerate}
     \item To show: \(R\) is an equivalence relation. We will call the combinative property (C).\\
     (R) Reflexivity: given. \\
@@ -58,6 +76,43 @@ All questions are verbatim or adapted; sources indicated.
     (T) Transitivity: Suppose \( a R b, b R c \). We want to show \( a R c \).
     We have \(c R b\) by (S) on \(b R c\), and \(a R b\) (given).
     Substituting \(c, a, b\) for \(x, y, z\) respectively in (C), we get \(a R c\), as required.
+
+    \item \(R, S\) both subsets of \(A \times A\).
+    Transitivity means that \( (\forall a, b, c \in A) \left( (a,b), (b,c) \in R \Rightarrow (a, c) \in R \right) \),
+    and similarly for \(S\).
+    Now suppose \((a,b), (b,c) \in R \cap S\). Then \((a,b), (b,c) \in R\) and \((a,b), (b,c) \in S\).
+    By transitivity, \((a, c) \in R\) and \((a, c) \in S\), and by definition of intersection, 
+    \((a, c) \in R \cap S\). So \(R \cap S\) is also transitive.
+
+    \item Suppose \( g \circ f \) is surjective.
+    Then \( (\forall c \in C) (\exists a \in A) g(f(a)) = c \) (*). \\
+    To show: \(g \) is surjective, i.e. \( (\forall c \in C) (\exists b \in B) g(b) = c \).
+    But this is clear: we can set \( b = f(a) \), as existence is guaranteed by (*).
+    
+    \item 
+    \begin{enumerate}
+        \item \( f : \mathbb{R} \rightarrow \mathbb{R}^+, f(x) = e^x \). Injective and surjective.
+        \item \( f : [-1, 0.5) \rightarrow [-2, 0.25], f(x) = x - x^2 \).
+        Injective as monotonic increasing. Not surjective as 0.25 not mapped.
+    \end{enumerate}
+
+    \item Informal (1 minute) `proofs'
+    \begin{enumerate}
+        \item False. \( \varnothing \).
+        \item True. Check R, S, T.
+        \item True.
+        Notice that \( |B| \ge |A| \) as \( g \circ f \) is the identity map.
+        Likewise \( |A| \ge |B| \).
+        Now satisfy yourself that \( g = f^{-1} = h \).
+        \item False. Let \(X = \{ 0, 1 \} \).
+        There is a bijection between the set of functions \( f : \mathbb{N} \rightarrow X \) 
+        and the power set of \(\mathbb{N}\).
+        \item True. Let \(|X| = n\). Easy proof by induction: \\
+        Base case: \(n=1\) trivial (as is \(n=0\)) \\
+        Inductive step: Assume countably many \( f : \{0, 1, \cdots , k\} \rightarrow \mathbb{N} \), 
+        ordered \( f_0, f_1, \cdots \). Now there are countably many choices for \( f_i (k+1) \).
+        The Cartesian product of two countable sets is also countable, and the result follows.
+    \end{enumerate}
 \end{enumerate}
 
 \end{document}
