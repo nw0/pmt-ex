@@ -20,7 +20,7 @@
 % Consider doing more DS next week, rather than logic.
 
 \section{Induction}
-Prove (by induction) that every positive integer greater than 1 is a product of primes.
+\emph{[Part of FTA]} Prove (by induction) that every positive integer greater than 1 is a product of primes.
 
 \section{Discrete Structures: Selected questions}
 All questions are verbatim or adapted; sources indicated.
@@ -64,6 +64,24 @@ All questions are verbatim or adapted; sources indicated.
 \newpage
 
 \section{Solutions to induction}
+Let \(P(k)\) denote that \(k\) is the product of primes.
+Use strong induction.
+
+Base case: \(P(2)\) holds as \(2 = 2\) is the product of primes.
+
+Inductive step:
+(I.H.) Suppose \(P(i)\) holds for all \(i < k \in \mathbb{N}\).
+Want to show \(P(k)\).
+
+Suppose \(k \in \mathbb{N} \) is not prime (otherwise we get \(P(k)\) immediately).
+Then \( k = a \times b \) for some \( a, b < k \).
+
+But (by I.H.) \(P(a)\) and \(P(b)\) hold, so \( a = p_1 \times \cdots \times p_i \) and 
+\( b = q_1 \times \cdots \times q_j \), where all \(p, q\) are prime.
+
+So \( k = p_1 \times \cdots \times p_i \times q_1 \times \cdots \times q_j \) and \( P(k) \) holds.
+
+So \( P(n) \) holds for any \( 2 \le n \in \mathbb{N} \) by the principle of induction.
 
 \section{Solutions to revision}
 Note: there is a distinct possibility that any of the solutions may be incorrect or insufficient.
