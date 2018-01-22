@@ -1,0 +1,71 @@
+\documentclass[10pt,a4paper]{article}
+    
+\usepackage{fullpage}
+\usepackage{palatino}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{framed}
+
+\begin{document}
+
+\title{PMT Additional Exercises (Week 3)}
+\author{Nicholas Sim}
+\date{January 25th, 2018}
+\maketitle{}
+
+% Last week I realised that there wasn't enough content on the Reasoning tutorial, 
+% as it was covered in lectures.
+
+% We're going to use Jeremy's Week 2 graph proof
+
+\section{Induction for graphs}
+A tree is a connected acyclic graph.
+
+Claim: any tree with \(n \in \mathbb{N}_{>0}\) vertices has \(n-1\) edges.
+Consider the following proof:
+
+\begin{framed}
+\begin{description}
+    \item[Base case] Suppose \(T\) has exactly one vertex \(v\).
+    Clearly any edges must be from \(v\) to itself, as there are no other vertices.
+    This would create a 1-cycle, so \(T\) has no edges.
+
+    \item[Inductive step] Fix a natural number \(k\).\\
+    Inductive Hypothesis: any tree with \(k\) vertices has \(k-1\) edges.
+
+    We want to show that a tree with \(k+1\) vertices has \(k\) edges.\\
+    Consider a tree \(T\) with \(k\) vertices.
+    It has \(k-1\) edges (I.H.).\\
+    Add a vertex \(v\), connecting it to any of the original vertices with exactly 1 edge.\\
+    This produces a tree (as it is connected and acyclic) with \(k+1\) vertices, which has \(k-1+1=k\) edges as required.
+\end{description}
+\end{framed}
+
+\begin{enumerate}
+    \item This proof is \emph{wrong}. Why?
+    \item The claim holds. Give a valid proof.
+\end{enumerate}
+
+\newpage
+
+\section{Solution to flawed proof}
+\begin{enumerate}
+    \item A hint would be that the base case is valid \emph{because} there is only one tree containing a single vertex.
+
+    The trouble lies with the inductive step, as we fix a tree \(T\) with \(k\) vertices.
+    Hence we only prove that trees of \(k+1\) vertices \emph{containing \(T\) as a subgraph} have \(k\) edges.
+
+    We need to show that `every tree can be constructed in this way', but it's in fact easier to fix our tree first and prove the result about it.
+
+    \item Use strong induction.
+    
+    Fix \(T\) with \(k+1 > 1\) vertices. To prove: \(T\) has \(k\) edges.\\
+    Remove any edge. We get exactly two subtrees (exercise) \(T', T''\) with \(v', v''\) vertices respectively, and \(k+1 = v' + v''\).\\
+    From the same I.H., \(T', T''\) have a total of \(v'-1 + v''-1 = k+1-2 = k-1\) edges.\\
+    Adding the original edge, \(T\) has \(k\) edges.
+
+    [Remark: alternatively, we can conveniently pick a `leaf' node, with only one edge, and apply the base case and inductive hypothesis, obviating the need for strong induction. However, you need to prove that such a node exists.]
+\end{enumerate}
+
+\end{document}
