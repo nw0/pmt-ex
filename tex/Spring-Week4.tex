@@ -1,0 +1,92 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{sourcecodepro}
+    
+\usepackage{fullpage}
+\usepackage{palatino}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{framed}
+\usepackage{listings}
+\lstset{language=Haskell,frame=single,basicstyle=\ttfamily,numbers=left}
+
+\newcommand{\just}[2]{\texttt{#1} & \textrm{#2}}
+
+\begin{document}
+
+\title{PMT Additional Exercises (Week 4)}
+\author{Nicholas Sim}
+\date{February 1st, 2018}
+\maketitle{}
+
+% This week's assessed PMT is on induction on lists and graphs
+% They haven't done induction on graphs in the lectures yet (?)
+% But I think the Discrete Structures course on 1st term provides enough foundation
+
+\section{Tree Reversal}
+[2010 Q1b (C146)] Consider the following operations on trees and lists:
+
+\begin{lstlisting}
+data Tree a = Leaf a | Node (Tree a) (Tree a)
+
+flatten :: Tree a -> [a]
+flatten Leaf x = [x]
+flatten (Node t1 t2) = (flatten t1) ++ (flatten t2)
+
+rotate :: Tree a -> Tree a
+rotate Leaf x = Leaf x
+rotate (Node t1 t2) = Node (rotate t2) (rotate t1)
+
+rev :: [a] -> [a]
+rev [] = []
+rev (x:xs) = (rev xs) ++ [x]
+\end{lstlisting}
+
+Prove, \emph{using structural induction}, that:
+
+\[ \forall \texttt{t:Tree a. flatten (rotate t) = rev (flatten t)} \]
+
+In the proofs, state what is given, the induction hypothesis (if any), 
+what is to be shown, and justify each step.
+You may use the property \((P)\), where:
+
+\[ \texttt{rev (xs ++ ys) = (rev ys) ++ (rev xs)} \]
+
+
+\newpage
+
+\section{Solution to trees}
+A straightforward structural induction (to prove: as in question) on trees.
+Note that the type \texttt{a} does not matter in this question; consider it fixed.
+
+\paragraph{Base case}
+To show: \texttt{flatten (rotate (Leaf x)) = rev (flatten (Leaf x))}
+
+\begin{align*}
+& \texttt{flatten (rotate (Leaf x))} \\
+&= \just{flatten (Leaf x)}{by def. rotate} \\
+&= \just{[x]}{by def. flatten} \\
+&= \just{rev [x]}{by def. rev} \\
+&= \just{rev (flatten (Leaf x))}{by def. flatten}
+\end{align*}
+
+\paragraph{Inductive step}
+Take trees \texttt{t1}, \texttt{t2} arbitrarily. Inductive Hypothesis:
+
+\[ \forall \texttt{t1:Tree a. flatten (rotate t1) = rev (flatten t1)} \]
+\[ \land \forall \texttt{t2:Tree a. flatten (rotate t2) = rev (flatten t2)} \]
+
+To show: \texttt{flatten (rotate (Node t1 t2)) = rev (flatten (Node t1 t2))}
+
+\begin{align*}
+& \texttt{flatten (rotate (Node t1 t2))} \\
+&= \just{flatten (Node (rotate t2) (rotate t1))}{by def. rotate} \\
+&= \just{(flatten (rotate t2)) ++ (flatten (rotate t1))}{by def. flatten} \\
+&= \just{(rev (flatten t2)) ++ (rev (flatten t1))}{by I.H} \\
+&= \just{rev (flatten t1) ++ (flatten t2)}{by (P)} \\
+&= \just{rev (flatten (Node t1 t2))}{by def. flatten}
+\end{align*}
+
+\end{document}
