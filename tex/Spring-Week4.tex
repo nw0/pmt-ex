@@ -1,14 +1,13 @@
 \documentclass[10pt,a4paper]{article}
 
 \usepackage[T1]{fontenc}
-\usepackage{sourcecodepro}
-    
-\usepackage{fullpage}
 \usepackage{palatino}
+\usepackage{inconsolata}
+
+\usepackage{fullpage}
 
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{framed}
 \usepackage{listings}
 \lstset{language=Haskell,frame=single,basicstyle=\ttfamily,numbers=left}
 
@@ -55,6 +54,25 @@ You may use the property \((P)\), where:
 \[ \texttt{rev (xs ++ ys) = (rev ys) ++ (rev xs)} \]
 
 
+\section{Stronger properties}
+[RAP 2018 PMT tutorial W4 Q2, adapted]
+
+\begin{lstlisting}
+revB :: [a] -> [a] -> [a]
+revB ys [] = ys
+revB ys (x:xs) = revB (x:ys) xs
+\end{lstlisting}
+
+We want to prove that \texttt{(revB [])} reverses a list, i.e.:
+
+\[ \forall \texttt{xs:[a]. revB [] xs = rev xs} \]
+
+However, this fails in the inductive step using structural induction over \texttt{xs}. Why?
+What alternative lemma can we prove from which we can derive this?
+
+Bonus question: complete the proof.
+
+
 \newpage
 
 \section{Solution to trees}
@@ -73,12 +91,14 @@ To show: \texttt{flatten (rotate (Leaf x)) = rev (flatten (Leaf x))}
 \end{align*}
 
 \paragraph{Inductive step}
-Take trees \texttt{t1}, \texttt{t2} arbitrarily. Inductive Hypothesis:
+Fix \texttt{t = Node t1 t2}.
+Inductive Hypothesis:
 
-\[ \forall \texttt{t1:Tree a. flatten (rotate t1) = rev (flatten t1)} \]
-\[ \land \forall \texttt{t2:Tree a. flatten (rotate t2) = rev (flatten t2)} \]
+\[ \forall \texttt{flatten (rotate t1) = rev (flatten t1)} \]
+\[ \land \forall \texttt{flatten (rotate t2) = rev (flatten t2)} \]
 
-To show: \texttt{flatten (rotate (Node t1 t2)) = rev (flatten (Node t1 t2))}
+To show:
+\[ \texttt{flatten (rotate (Node t1 t2)) = rev (flatten (Node t1 t2))} \]
 
 \begin{align*}
 & \texttt{flatten (rotate (Node t1 t2))} \\
@@ -88,5 +108,25 @@ To show: \texttt{flatten (rotate (Node t1 t2)) = rev (flatten (Node t1 t2))}
 &= \just{rev (flatten t1) ++ (flatten t2)}{by (P)} \\
 &= \just{rev (flatten (Node t1 t2))}{by def. flatten}
 \end{align*}
+
+
+\section{Solution to stronger properties}
+With \texttt{xs} fixed, our would-be inductive hypothesis would look like this:
+
+\[ \texttt{revB [] xs = rev xs} \]
+
+To show:
+
+\[ \forall \texttt{x:Integer. revB [] (x:xs) = rev (x:xs)} \]
+
+\begin{align*}
+& \texttt{revB [] (x:xs)} \\
+&= \just{revB (x:[]) xs}{by def. revB} \\
+&= ???
+\end{align*}
+
+Prove this instead (structural induction over \texttt{xs} again):
+
+\[ \forall \texttt{xs:[Integer],ys:[Integer]. revB ys xs = (rev xs) ++ ys} \]
 
 \end{document}
