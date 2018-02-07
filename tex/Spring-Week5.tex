@@ -1,0 +1,99 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{palatino}
+\usepackage{inconsolata}
+
+\usepackage{fullpage}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\lstset{language=Haskell,frame=single,basicstyle=\ttfamily,numbers=left}
+
+\newcommand{\just}[2]{\texttt{#1} & \textrm{#2}}
+
+\begin{document}
+
+\title{PMT Additional Exercises (Week 5)}
+\author{Nicholas Sim}
+\date{February 8th, 2018}
+\maketitle{}
+
+
+\section{Maximum sum}
+
+\begin{lstlisting}
+maxSum :: [Integer] -> Integer
+maxSum = snd . foldr f (0,0)
+  where f x (c,g) = (c',g')
+    where c' = max 0 (c+x)
+          g' = max g c'
+\end{lstlisting}
+
+Prove that \texttt{maxSum} (Kadane) computes the maximum sum of a \emph{contiguous} subarray.
+That is:
+
+\[ \forall \texttt{xs:[Int].maxSum xs} = \max_{0\le i \le j < \texttt{\#xs}} \sum_{k=i}^{j} \texttt{xs}[k] \]
+
+Remark: this algorithm is usually run left-to-right (i.e.~\texttt{foldl}), but produces the same result.
+
+
+\newpage
+
+\section{Solution to trees}
+
+\section{Solution to maximum sum}
+This is a classic problem in computer science, and as noted,
+we have implemented Kadane's algorithm, which has linear time complexity.
+
+The first thing we should observe is that \texttt{c} represents the current sum, and \texttt{g} the global.
+Similar to last week, we will instead prove a property about \texttt{f}:
+
+\[ \forall \texttt{xs:[Int].foldr f (0,0) xs} = (\max_{0\le j < \texttt{\#xs}} \sum_{k=0}^{j} \texttt{xs}[k],\max_{0\le i \le j < \texttt{\#xs}} \sum_{k=i}^{j} \texttt{xs}[k]) \]
+
+Recall:
+
+\begin{lstlisting}
+foldr f z []     = z
+foldr f z (x:xs) = f x (foldr f z xs)
+\end{lstlisting}
+
+\paragraph{Base case}
+To show: \texttt{foldr f (0,0) [] = (0,0)}
+
+This follows directly from the definition of \texttt{foldr}.
+
+\paragraph{Inductive step}
+Fix \texttt{xs:[Int]}.
+
+Inductive Hypothesis:
+
+\[ \texttt{foldr f (0,0) xs} =
+(\max_{0\le j < \texttt{\#xs}} \sum_{k=0}^{j} \texttt{xs}[k],
+\max_{0\le i \le j < \texttt{\#xs}} \sum_{k=i}^{j} \texttt{xs}[k]) \]
+
+We will call this tuple \texttt{(c,g)}.
+
+To show:
+\[ \forall \texttt{x:Int.foldr f (0,0) x:xs} =
+(\max_{0\le j \le \texttt{\#xs}} \sum_{k=0}^{j} \texttt{(x:xs)}[k],
+\max_{0\le i \le j \le \texttt{\#xs}} \sum_{k=i}^{j} \texttt{(x:xs)}[k]) \]
+
+Claim (*) that \texttt{(c,g)} represent the variables mentioned above at each step of the fold. Alternate I.H.:
+
+\begin{align*}
+& \texttt{maxSum x:xs} \\
+&= \just{snd . foldr f (0,0) x:xs}{by def. maxSum} \\
+&= \just{snd . f x (foldr f (0,0) xs)}{by def. foldr} \\
+&= \just{snd . f x (c,g)}{by I.H.} \\
+&= \just{snd . (max 0 c+x,max g (max 0 c+x))}{by def. f} \\
+&= \just{max g (max 0 c+x)}{by def. snd}
+\end{align*}
+
+I claim that this is what we want.
+Cases: either \texttt{x} is in the sum, or not.
+If it is, the sublist starts at \texttt{x}, thus \texttt{c+x} is the maximum.
+Otherwise \texttt{g} is the maximum (by problem definition and given by I.H.).
+
+\end{document}
