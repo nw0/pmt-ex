@@ -12,6 +12,9 @@
 \lstset{language=Haskell,frame=single,basicstyle=\ttfamily,numbers=left}
 
 \newcommand{\just}[2]{\texttt{#1} & \textrm{#2}}
+\newcommand{\cycle}[1]{cycle(\texttt{#1})}
+\newcommand{\reach}[2]{reach(\texttt{#1},\texttt{#2})}
+\newcommand{\existstin}[2]{\exists\texttt{#1}\in\texttt{#2}}
 
 \begin{document}
 
@@ -39,9 +42,29 @@ That is:
 Remark: this algorithm is usually run left-to-right (i.e.~\texttt{foldl}), but produces the same result.
 
 
+\section{Cycle-finding}
+\emph{Remark: representing (potentially) cyclic data structures in Haskell can be a hazard. Search `tying the knot' for more information.}
+
+\begin{lstlisting}
+data Node a = Node { value :: a, targets :: [Node a] }
+
+findCycle :: [Node a] -> Node a -> Bool
+findCycle visited node
+= elem node visited || any (findCycle node:visited) (targets x)
+\end{lstlisting}
+
+A \texttt{Node} represents a node in a connected \emph{directed} graph.
+Use \(cycle(\texttt{n})\) for a predicate indicating a cycle can be reached from a node \texttt{n}, and \( \reach n m \) for \texttt{n} is reachable from \texttt{m} (both nodes).
+
+\begin{enumerate}
+	\item Write down a structural induction principle for the \texttt{Node} data type.
+	\item (*) Write down a property (provable with induction) sufficient to show that \texttt{findCycle} determines if there is a cycle from a given node.
+	\item (***) Complete the proof\footnote{Unlike last week, I have a written solution. You should consider this question to be at least as difficult as any exam question for Reasoning.}
+\end{enumerate}
+
+
 \newpage
 
-\section{Solution to trees}
 
 \section{Solution to maximum sum}
 This is a classic problem in computer science, and as noted,
@@ -95,5 +118,44 @@ I claim that this is what we want.
 Cases: either \texttt{x} is in the sum, or not.
 If it is, the sublist starts at \texttt{x}, thus \texttt{c+x} is the maximum.
 Otherwise \texttt{g} is the maximum (by problem definition and given by I.H.).
+
+\section{Solution to cycle-finding}
+Remark: this is for reachable nodes. We only have one case (refreshing!)\footnote{Below, we use \( \forall\texttt{x}\in\texttt{xs.} P(\texttt{x}) \) as a shorthand for \( \forall\texttt{x:a.} \texttt{elem x xs} \rightarrow P(\texttt{x}) \), where \texttt{xs:[a]} and \(P\) some predicate.}
+
+\[ \forall\texttt{n:Node.} (\forall\texttt{m}\in \texttt{targets n.} P(\texttt{m})) \rightarrow P(\texttt{n}) \]
+
+Want to show: \( \forall\texttt{n:Node,vs:[Node].}\texttt{findCycle vs n} \leftrightarrow cycle(\texttt{n}) \lor \exists\texttt{v}\in\texttt{vs}: reach(\texttt{v},\texttt{n}) \)\footnote{Likewise, \( \exists\texttt{x}\in\texttt{xs.} P(\texttt{x}) \) represents \emph{something sensible that I am too lazy to write}. (sufficient to apply double negative to the universally quantified case to note that this is valid)}
+
+This proof is a sketch only, write the detail in yourself.
+
+\paragraph{Inductive step}
+Fix \texttt{ts:[Node]}.
+
+Inductive Hypothesis:
+\[ \forall\texttt{m}\in\texttt{ts,vs:[Node].}\texttt{findCycle vs m} \leftrightarrow cycle(\texttt{m}) \lor \exists\texttt{v}\in\texttt{vs}: reach(\texttt{v},\texttt{m}) \]
+
+To show:
+\[ \forall \texttt{x:a,vs:[Node].}\texttt{findCycle vs n} \leftrightarrow \cycle n \lor \exists\texttt{v}\in\texttt{vs}: \reach v n \]
+
+writing \texttt{n} for \texttt{Node \{value=x, targets=ts\}}.
+
+Fix \texttt{x:a}, \texttt{vs:[Node]}.
+
+%Assume none of the targets in \texttt{ts} have a reachable cycle
+%(otherwise so does our node, and follows from the \texttt{any} clause in \texttt{findCycle}).
+
+Assume LHS. Want to show \(cycle(\texttt{n}) \lor \exists\texttt{v}\in\texttt{vs}: reach(\texttt{v},\texttt{n})\).
+Assume \( \texttt{n}\notin\texttt{vs} \), otherwise \(reach\) immediately follows from \texttt{elem node visited}.
+So \( \exists\texttt{m}\in\texttt{ts}: \texttt{findCycle n:vs m} \).
+Applying I.H. we get \( \cycle m \) (so \(\cycle n \)) or \(\exists\texttt{v}\in\texttt{(n:vs)}: \reach v m \) (in which case \(\exists\texttt{v}\in\texttt{vs}: \reach v n \), or \(\reach n n \), i.e. \(\cycle n\)).
+
+Assume \( \existstin v {vs}: \reach v n \).
+Then certainly either \(\texttt{n}\in\texttt{vs}\) (hence \texttt{elem n vs}), or \(\existstin m {ts} : \existstin v {vs} : \reach v m \) (fulfil \texttt{any} case using I.H.). Thus LHS holds.
+
+Finally, for the substance of the proof: assume \( \cycle n \).
+Clearly we have \( \reach n n \) (\texttt{n} is part of a cycle), or \( \existstin m {ts} : \cycle m \).
+If the latter holds, then \( \forall \texttt{vs:[Node].} \existstin m {ts} : \texttt{findCycle vs m} \) by I.H., so the \texttt{any} case holds.
+Otherwise, \texttt{n} is in \texttt{ts} (trivial application of the \texttt{elem} case), or \( \existstin m {ts}: \reach n m \) (by reasoning about cycles and reachability).
+But now \texttt{findCycle n:vs m} holds since \( \exists v {(n:vs)} : \reach v m \) (I.H.), so \texttt{findCycle vs n} holds by the \texttt{any} case.
 
 \end{document}
