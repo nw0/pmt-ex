@@ -1,0 +1,85 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{palatino}
+\usepackage{inconsolata}
+
+\usepackage{fullpage}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{PMT Revision (Week 10)}
+\author{Nicholas Sim}
+\date{March 15th, 2018}
+\maketitle{}
+
+
+\section{Logic}
+[See handout: C140 2016 Q1c]
+
+
+\section{Relations}
+\begin{enumerate}
+	\item \emph{[C142 2015 Q1d.v]} Let \(R \subseteq A^2\).
+	Prove that if \(R\) is symmetric, then \(R\circ R\) is also symmetric. 
+	\item \emph{[C142 2005 Q2b.ii]} Let \(R\) be a binary relation on the natural numbers defined by \(xRy\) if and only if \(y = 2x\).
+	Describe the transitive closure of \(R\).
+	\item \emph{[C142 2005 Q2b.iii]} A binary relation \(R\) is antisymmetric if and only if \((a,b) \in R \) and \((b, a) \in R\) implies \(a=b\).
+	How many binary relations on \(A = \{1, 2, 3, 4\}\) are both symmetric and antisymmetric? Justify your answer. \\
+	\emph{[Bonus: What about an arbitrary set?]}
+\end{enumerate}
+
+
+\section{Functions}
+\emph{[C142 2002 Q1c]} Let \(f: A\rightarrow B\) and \(g: B \rightarrow C \) be functions.
+Prove the following (otherwise give a counterexample):
+\begin{enumerate}
+	\item \(f\) surjective implies \(g \circ f\) surjective;
+	\item \(g \circ f\) injective implies \(f\) injective;
+	\item \(g \circ f\) injective implies \(g\) injective;
+	\item \(f, g\) surjective implies \(g \circ f\) surjective.
+\end{enumerate}
+
+
+\newpage
+
+Note: these solutions are only outlines.
+
+\section{Solution to Alternative Elimination}
+\begin{enumerate}
+	\item I would argue that (2-4) are sufficient for \(A \rightarrow B\).
+	From here, we can use EM to get \( A \lor \neg A\), and \(\lor E\) to get \(B\).
+	\item First use \(\lor I\) to get \( A \lor B \lor C\). Assume \(A\) to get \(C\) then \(B \lor C\) (using \(\lor I\)). Now use \(Alt\lor E\) to get \(B \lor C\). Use \(Alt\lor E\) again to get \(C\).
+	\item Observe that \(\lor E\) essentially follows from the previous part. (Say: if we have ..., then get \(\vdash^a C\))
+	\item \(\vdash^a\) is complete if every valid statement expressed in propositional logic can be proven using only the rules of \(\vdash^a\).
+	It is sound if every statement that can be proven under the system is valid.
+	\item We know from the lectures that \(\vdash\) is sound and complete.
+	Since \(Alt\lor E\) is a derived rule of \(\vdash\), soundness is preserved (we can't prove anything new, hence nothing invalid).
+	Since \(\lor E\) is a derived rule of \(\vdash^a\), completeness is preserved (we can prove at least the same things that \(\vdash\) can).
+\end{enumerate}
+
+
+\section{Solutions to Relations}
+\begin{enumerate}
+	\item Suppose that \(R\) is symmetric, i.e. \( (a, b) \in R \Rightarrow (b,a) \in R \). Recall that \( R \circ R = \{ (a,c) : (\exists b) \left( (a,b) \in R \land (b,c) \in R \right) \} \). \\
+	Fix \( (a,c) \in R \circ R \). To show: \( (c,a) \in R \circ R \). But this is clear as \( \exists b (a,b), (b,c) \in R \), so \( (b,a), (c,b) \in R \) by symmetry, and \( (c,a) \in R \circ R\).
+	\item \(x \bar R y\) if and only if \(\exists n \in \mathbb{N}_{>0} : y = 2^n x \).
+	\item \(R\) is symmetric if and only if \( (b,a) \in R \) whenever \( (a,b) \in R \). Let \(R\) be both symmetric and antisymmetric. Suppose \( (a,b) \in R \). Then \( (b,a) \in R \), so \(a=b\). \\
+	We easily see that the possible relations \(R\) are those which only contain pairs of the form \( (a,a) \). So 16.
+\end{enumerate}
+
+
+\section{Solutions to Functions}
+\begin{enumerate}
+	\item False, let \( C = \{0,1\} \) and \(g(x) = 0\)... (write a surjective \(f\) and sets)
+	\item We show the contrapositive. Suppose \(f\) not injective. Then \(\exists a_1, a_2 \in A : f(a_1) = f(a_2) \in B \). Clearly \( g(f(a_1)) = g(f(a_2)) \) (as \(g\) is a well-defined function), so \(g\circ f\) is not injective.
+	\item False, let \( A = \{0, 1\}, B = \{0,1,2\}, C=\{0,1\}, f=\mathrm{id}, g(0)=g(2)=0, g(1)=1 \).
+	\item Suppose \(f, g\) surjective, i.e. \( \forall b \in B \exists a \in A : f(a) = b \) and \( \forall c \in C \exists b \in B : g(b) = c \).\\
+	Fix \( c \in C\). Want: \( \exists a \in A : g(f(a)) = c \). We have \(b \in B\) s.t. \( g(b) = c \). Similarly \( \exists a \in A : f(a) = b \), which is what was required.
+\end{enumerate}
+
+
+\end{document}
